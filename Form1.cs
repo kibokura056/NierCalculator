@@ -18,11 +18,19 @@ namespace NierCalculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //---------------------------------
+            // テーブル初期化
+            //---------------------------------
             initTable(materialTable);
             initTable(materialTable2);
             init = true;
 
-            
+            //---------------------------------
+            // コンボボックス初期化
+            //---------------------------------
+            cb_cost.SelectedIndex = 0;
+            cb_level.SelectedIndex = 0;
+            cb_count.SelectedIndex = 0;
         }
 
 
@@ -59,6 +67,8 @@ namespace NierCalculator
                         dgv.Rows[i].Cells[j].ReadOnly = true;
                         dgv.Rows[i].Cells[j].Style.BackColor = Color.Gray;
                     }
+                    else
+                        break;
                 }
             }
 
@@ -131,6 +141,22 @@ namespace NierCalculator
                 {
                     if (c.ReadOnly == false)
                         c.Value = null;
+                }
+            }
+        }
+
+
+        //-----------------------------------------------------
+        // リセットボタン押下時のイベントハンドラ
+        //-----------------------------------------------------
+        private void bt_reset_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i <= 8; i++)
+            {
+                for (int j = 1; j < 20; j++)
+                {
+                    materialTable.Rows[i].Cells[j].Value = null;
+                    materialTable2.Rows[i].Cells[j].Value = null;
                 }
             }
         }
