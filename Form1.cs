@@ -34,15 +34,16 @@ namespace NierCalculator
         }
 
 
-        //---------------------------------------------------------------------------------------------
+        //---------------------------------
         // テーブルを初期化するメソッド
-        //---------------------------------------------------------------------------------------------
+        //---------------------------------
         private void initTable(DataGridView dgv)
         {
             dgv.RowCount = 9;
             dgv.ColumnCount = 20;
             dgv.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
+            //ランクはi、コストはj+3
             for (int i = 0; i < 20; i++)
             {
                 if (i > 0)
@@ -67,6 +68,10 @@ namespace NierCalculator
                         dgv.Rows[i].Cells[j].ReadOnly = true;
                         dgv.Rows[i].Cells[j].Style.BackColor = Color.Gray;
                     }
+                    else if (i < 8 && (CalcCost(i, j + 3, j + 3) <= MINCOST[i + 1] || (j > 1 && CalcCost(i, j + 3, j + 2) <= MINCOST[i + 1]))) 
+                    {
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.SkyBlue;
+                    }
                     else
                         break;
                 }
@@ -82,12 +87,12 @@ namespace NierCalculator
         // ランクnのコストaとコストbのチップを合成すると、コスト(a+b+n+1)/2(切り捨て)のチップができる。
         // ※ランク0はn=1
         //---------------------------------------------------------------------------------------------
-        private int CalcCost(ushort rank, ushort a, ushort b)
+        private int CalcCost(int rank, int a, int b)
         {
             if (rank != 0)
-                return (int)((a + b + rank) / 2);
+                return (a + b + rank + 1) / 2;
             else
-                return (int)((a + b + 2) / 2);
+                return (a + b + 2) / 2;
         }
 
 
@@ -159,6 +164,36 @@ namespace NierCalculator
                     materialTable2.Rows[i].Cells[j].Value = null;
                 }
             }
+
+            cb_cost.SelectedIndex = 0;
+            cb_level.SelectedIndex = 0;
+            cb_count.SelectedIndex = 0;
+        }
+
+
+        //-----------------------------------------------------
+        // 計算ボタン押下時のイベントハンドラ
+        //-----------------------------------------------------
+        private void bt_calc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        //-----------------------------------------------------
+        // レベル変更時のイベントハンドラ
+        // レベルに応じてコストコンボボックスの内容を変更する
+        //-----------------------------------------------------
+        private void cb_level_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //レベルは index + 1
+            int level = ((ComboBox)sender).SelectedIndex + 1;   //レベルを取得
+            cb_cost.Items.Clear();                              //コストコンボボックスのアイテムを全削除
+            for(int i = MINCOST[level]; i <= MAXCOST; i++)
+            {
+                cb_cost.Items.Add(i.ToString());
+            }
+            cb_cost.SelectedIndex = 0;                          //最小コストを選択
         }
     }
 
