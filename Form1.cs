@@ -239,7 +239,7 @@ namespace NierCalculator
             cb_count.SelectedIndex = 0;
 
             lb_NoEnoughParts.Visible = false;
-            lb_log.Text = "合成ログがここに表示される。\n推奨: 記載される手順に従った合成。";
+            tb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。";
 
             SwitchEnabled(true);
         }
@@ -313,18 +313,21 @@ namespace NierCalculator
             {
                 //合成できた場合は、パーツ不足の警告を非表示
                 lb_NoEnoughParts.Visible = false;
+                tb_log.Location = new Point(8, 15);
+                tb_log.Size = new Size(321, 699);
             }
             else
             {
                 //合成できなかった場合は、パーツ不足の警告を表示
                 lb_NoEnoughParts.Visible = true;
-                stb.Append("\n\n\n");
+                tb_log.Location = new Point(8, 47);
+                tb_log.Size = new Size(321, 667);
             }
             foreach (Log l in log)
             {
-                stb.Append(l.ToString() + "\n");
+                stb.Append(l.ToString() + "\r\n");
             }
-            lb_log.Text = stb.ToString();
+            tb_log.Text = stb.ToString();
 
 
 
@@ -338,12 +341,14 @@ namespace NierCalculator
         /// <param name="b">有効にする場合true, 無効にする場合false</param>
         private void SwitchEnabled(bool b)
         {
+            lb_busy.Visible = !b;
             materialTable.Enabled = b;
             cb_rank.Enabled = b;
             cb_cost.Enabled = b;
             cb_count.Enabled = b;
             bt_calc.Enabled = b;
             bt_reset.Enabled = b;
+            this.Update();
         }
 
 
@@ -377,10 +382,13 @@ namespace NierCalculator
                     {
                         do
                         {
-                            //ロールバック用にバックアップを残しておく
-                            //var log_bk = new List<Log>(log);
-                            //int[,] partsCount_bk = new int[9, 23];
-                            //Array.Copy(partsCount, partsCount_bk, partsCount.Length);
+                            //---------------------------------------------------------------------------------
+                            // バックアップフェーズ
+                            // 合成できなかった時にロールバックできるように、ログとテーブルをバックアップする
+                            //---------------------------------------------------------------------------------
+                            var log_bk = new List<Log>(log);
+                            int[,] partsCount_bk = new int[9, 23];
+                            Array.Copy(partsCount, partsCount_bk, partsCount.Length);
 
 
                             if (a == b && Conv(rank - 1, a, 2))
@@ -399,9 +407,12 @@ namespace NierCalculator
                             }
                             else
                             {
-                                //ロールバックする
-                                //log = new List<Log>(log_bk);
-                                //Array.Copy(partsCount_bk, partsCount, partsCount.Length);
+                                //----------------------------------------------------------
+                                // ロールバックフェーズ
+                                // 合成できなかった時にログとテーブルをロールバックする
+                                //----------------------------------------------------------
+                                log = new List<Log>(log_bk);
+                                Array.Copy(partsCount_bk, partsCount, partsCount.Length);
 
                                 break;
                             }
@@ -424,7 +435,7 @@ namespace NierCalculator
                                         break;
                                     }
                                     //昇順で挿入されているため、現在のランク、コストより大きいエントリが存在した場合は、その時点のエントリの前に追加する
-                                    else if (Log.Assesment(rank,a,b) < log[i].Assesment())
+                                    else if (Log.Assesment(rank - 1,a,b) < log[i].Assesment())
                                     {
                                         log.Insert(i, new Log(rank - 1, a, b));
                                         break;

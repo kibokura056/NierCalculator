@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.materialTable = new System.Windows.Forms.DataGridView();
             this.materialTable2 = new System.Windows.Forms.DataGridView();
@@ -47,7 +45,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lb_NoEnoughParts = new System.Windows.Forms.Label();
-            this.lb_log = new System.Windows.Forms.Label();
+            this.lb_busy = new System.Windows.Forms.Label();
+            this.tb_log = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -66,24 +65,8 @@
             this.materialTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTable.ColumnHeadersHeight = 25;
             this.materialTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.materialTable.DefaultCellStyle = dataGridViewCellStyle1;
             this.materialTable.Location = new System.Drawing.Point(6, 18);
             this.materialTable.Name = "materialTable";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.materialTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.materialTable.RowHeadersVisible = false;
             this.materialTable.RowHeadersWidth = 35;
             this.materialTable.RowTemplate.Height = 21;
@@ -279,10 +262,10 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.lb_NoEnoughParts);
-            this.groupBox4.Controls.Add(this.lb_log);
+            this.groupBox4.Controls.Add(this.tb_log);
             this.groupBox4.Location = new System.Drawing.Point(610, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(308, 722);
+            this.groupBox4.Size = new System.Drawing.Size(335, 722);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "合成ログ";
@@ -292,28 +275,47 @@
             this.lb_NoEnoughParts.AutoSize = true;
             this.lb_NoEnoughParts.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.lb_NoEnoughParts.ForeColor = System.Drawing.Color.Red;
-            this.lb_NoEnoughParts.Location = new System.Drawing.Point(83, 15);
+            this.lb_NoEnoughParts.Location = new System.Drawing.Point(87, 15);
             this.lb_NoEnoughParts.Name = "lb_NoEnoughParts";
             this.lb_NoEnoughParts.Size = new System.Drawing.Size(145, 24);
             this.lb_NoEnoughParts.TabIndex = 14;
             this.lb_NoEnoughParts.Text = "警告: パーツ不足\r\n推奨: パーツ集め及び厳選";
             this.lb_NoEnoughParts.Visible = false;
             // 
-            // lb_log
+            // lb_busy
             // 
-            this.lb_log.AutoSize = true;
-            this.lb_log.Location = new System.Drawing.Point(6, 15);
-            this.lb_log.Name = "lb_log";
-            this.lb_log.Size = new System.Drawing.Size(181, 24);
-            this.lb_log.TabIndex = 7;
-            this.lb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。";
+            this.lb_busy.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.lb_busy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_busy.Font = new System.Drawing.Font("MS UI Gothic", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lb_busy.Location = new System.Drawing.Point(252, 304);
+            this.lb_busy.Name = "lb_busy";
+            this.lb_busy.Size = new System.Drawing.Size(427, 133);
+            this.lb_busy.TabIndex = 1;
+            this.lb_busy.Text = "処理中…\r\n\r\n推奨: 待機";
+            this.lb_busy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lb_busy.Visible = false;
+            // 
+            // tb_log
+            // 
+            this.tb_log.AcceptsReturn = true;
+            this.tb_log.BackColor = System.Drawing.SystemColors.Control;
+            this.tb_log.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_log.Location = new System.Drawing.Point(8, 15);
+            this.tb_log.Multiline = true;
+            this.tb_log.Name = "tb_log";
+            this.tb_log.ReadOnly = true;
+            this.tb_log.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tb_log.Size = new System.Drawing.Size(321, 699);
+            this.tb_log.TabIndex = 15;
+            this.tb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。\r\n";
             // 
             // Form1
             // 
             this.AcceptButton = this.bt_calc;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 741);
+            this.ClientSize = new System.Drawing.Size(957, 741);
+            this.Controls.Add(this.lb_busy);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -351,10 +353,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label lb_log;
         private System.Windows.Forms.Button bt_reset;
         private System.Windows.Forms.Button bt_calc;
         private System.Windows.Forms.Label lb_NoEnoughParts;
+        private System.Windows.Forms.Label lb_busy;
+        private System.Windows.Forms.TextBox tb_log;
     }
 }
 
