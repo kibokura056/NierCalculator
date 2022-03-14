@@ -37,7 +37,7 @@
             this.bt_calc = new System.Windows.Forms.Button();
             this.cb_count = new System.Windows.Forms.ComboBox();
             this.cb_cost = new System.Windows.Forms.ComboBox();
-            this.cb_level = new System.Windows.Forms.ComboBox();
+            this.cb_rank = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,6 +45,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lb_log = new System.Windows.Forms.Label();
+            this.lb_NoEnoughParts = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -112,7 +113,7 @@
             this.groupBox2.Controls.Add(this.bt_calc);
             this.groupBox2.Controls.Add(this.cb_count);
             this.groupBox2.Controls.Add(this.cb_cost);
-            this.groupBox2.Controls.Add(this.cb_level);
+            this.groupBox2.Controls.Add(this.cb_rank);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label2);
@@ -183,12 +184,12 @@
             this.cb_cost.Size = new System.Drawing.Size(50, 20);
             this.cb_cost.TabIndex = 10;
             // 
-            // cb_level
+            // cb_rank
             // 
-            this.cb_level.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_level.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.cb_level.FormattingEnabled = true;
-            this.cb_level.Items.AddRange(new object[] {
+            this.cb_rank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_rank.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.cb_rank.FormattingEnabled = true;
+            this.cb_rank.Items.AddRange(new object[] {
             "+1",
             "+2",
             "+3",
@@ -197,11 +198,11 @@
             "+6",
             "+7",
             "+8"});
-            this.cb_level.Location = new System.Drawing.Point(51, 24);
-            this.cb_level.Name = "cb_level";
-            this.cb_level.Size = new System.Drawing.Size(50, 20);
-            this.cb_level.TabIndex = 9;
-            this.cb_level.SelectedIndexChanged += new System.EventHandler(this.cb_level_SelectedIndexChanged);
+            this.cb_rank.Location = new System.Drawing.Point(51, 24);
+            this.cb_rank.Name = "cb_rank";
+            this.cb_rank.Size = new System.Drawing.Size(50, 20);
+            this.cb_rank.TabIndex = 9;
+            this.cb_rank.SelectedIndexChanged += new System.EventHandler(this.cb_level_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -229,21 +230,22 @@
             this.label2.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label2.Location = new System.Drawing.Point(11, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 12);
+            this.label2.Size = new System.Drawing.Size(30, 12);
             this.label2.TabIndex = 6;
-            this.label2.Text = "レベル";
+            this.label2.Text = "ランク";
             // 
             // label1
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.label1.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label1.Location = new System.Drawing.Point(6, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(580, 83);
             this.label1.TabIndex = 0;
-            this.label1.Text = "※注意※\r\n以下のプラグインチップは併記されている組み合わせで使用する方が低コストとなる\r\n\r\nチャージアタック +4 +4,  連続ダメージ防止 +3 +3 +" +
-    "3 or +3 +6,  再起動 +2 +6\r\n移動速度UP +3 +3,  ドロップ率UP +3 +4,  オーバークロック +3 +4,  挑発強化 +4 " +
-    "+4";
+            this.label1.Text = "警告: 以下のプラグインチップは最大までレベルアップしない方が低コストで効果上限に達する。\r\n推奨: 併記されている組み合わせでの使用。\r\n\r\nチャージアタック " +
+    "+4 +4,  連続ダメージ防止 +3 +3 +3 or +3 +6,  再起動 +2 +6\r\n移動速度UP +3 +3,  ドロップ率UP +3 +4,  オ" +
+    "ーバークロック +3 +4,  挑発強化 +4 +4";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox3
@@ -258,10 +260,11 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.lb_NoEnoughParts);
             this.groupBox4.Controls.Add(this.lb_log);
             this.groupBox4.Location = new System.Drawing.Point(610, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(203, 722);
+            this.groupBox4.Size = new System.Drawing.Size(308, 722);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "合成ログ";
@@ -271,16 +274,28 @@
             this.lb_log.AutoSize = true;
             this.lb_log.Location = new System.Drawing.Point(6, 15);
             this.lb_log.Name = "lb_log";
-            this.lb_log.Size = new System.Drawing.Size(183, 12);
+            this.lb_log.Size = new System.Drawing.Size(181, 24);
             this.lb_log.TabIndex = 7;
-            this.lb_log.Text = "ランク+0のコスト 10 とコスト 10 を合成";
+            this.lb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。";
+            // 
+            // lb_NoEnoughParts
+            // 
+            this.lb_NoEnoughParts.AutoSize = true;
+            this.lb_NoEnoughParts.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lb_NoEnoughParts.ForeColor = System.Drawing.Color.Red;
+            this.lb_NoEnoughParts.Location = new System.Drawing.Point(83, 15);
+            this.lb_NoEnoughParts.Name = "lb_NoEnoughParts";
+            this.lb_NoEnoughParts.Size = new System.Drawing.Size(145, 24);
+            this.lb_NoEnoughParts.TabIndex = 14;
+            this.lb_NoEnoughParts.Text = "警告: パーツ不足\r\n推奨: パーツ集め及び厳選";
+            this.lb_NoEnoughParts.Visible = false;
             // 
             // Form1
             // 
             this.AcceptButton = this.bt_calc;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 741);
+            this.ClientSize = new System.Drawing.Size(930, 741);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -313,7 +328,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cb_count;
         private System.Windows.Forms.ComboBox cb_cost;
-        private System.Windows.Forms.ComboBox cb_level;
+        private System.Windows.Forms.ComboBox cb_rank;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -321,6 +336,7 @@
         private System.Windows.Forms.Label lb_log;
         private System.Windows.Forms.Button bt_reset;
         private System.Windows.Forms.Button bt_calc;
+        private System.Windows.Forms.Label lb_NoEnoughParts;
     }
 }
 
