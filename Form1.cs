@@ -15,9 +15,9 @@ namespace NierCalculator
         List<Log> log = new List<Log>();
 
 
-        //---------------------------------
-        // ログ記録のための構造体
-        //---------------------------------
+        /// <summary>
+        /// ログ記録のための構造体
+        /// </summary>
         struct Log
         {
             public int rank;
@@ -35,14 +35,25 @@ namespace NierCalculator
             }
             public override string ToString()
             {
-                return $"ランク+{rank}のコスト{cost_a} とコスト{cost_b} を合成 → ランク+{rank + 1}, コスト{CalcCost(rank, cost_a, cost_b)} ×{count}";
+                return $"ランク+{rank}のコスト{cost_a} とコスト{cost_b} を合成 ⇒ ランク+{rank + 1}, コスト{CalcCost(rank, cost_a, cost_b)} ×{count}";
             }
 
+            /// <summary>
+            /// ランク・コストの組の大小を比較するために評価値に変換する
+            /// </summary>
+            /// <returns>評価値</returns>
             public int Assesment()
             {
                 return Assesment(this.rank, this.cost_a, this.cost_b);
             }
 
+            /// <summary>
+            /// ランク・コストの組の大小を比較するために評価値に変換する
+            /// </summary>
+            /// <param name="rank">チップのランク</param>
+            /// <param name="cost_a">チップのコストa</param>
+            /// <param name="cost_b">チップのコストb</param>
+            /// <returns>評価値</returns>
             public static int Assesment(int rank, int cost_a, int cost_b)
             {
                 return int.Parse($"{rank}{cost_a:D2}{cost_b:D2}");
@@ -73,9 +84,10 @@ namespace NierCalculator
         }
 
 
-        //---------------------------------
-        // テーブルを初期化するメソッド
-        //---------------------------------
+        /// <summary>
+        /// テーブルを初期化する
+        /// </summary>
+        /// <param name="dgv">初期化したいmaterialTable</param>
         private void initTable(DataGridView dgv)
         {
             dgv.RowCount = 9;
@@ -93,7 +105,6 @@ namespace NierCalculator
             }
             for (int i = 0; i <= 8; i++)
             {
-                dgv.Rows[i].Cells[0].Value = i.ToString();
                 dgv.Rows[i].Cells[0].Value = i.ToString();
                 dgv.Rows[i].Cells[0].ReadOnly = true;
                 dgv.Rows[i].Height = 25;
@@ -129,13 +140,19 @@ namespace NierCalculator
         }
 
 
-        //---------------------------------------------------------------------------------------------
-        // コストを計算するメソッド
-        // ランクnのコストaとコストbのチップを合成すると、コスト(a+b+n+1)/2(切り捨て)のチップができる。
-        // ※ランク0はn=1
-        //---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// チップ合成後のコストを計算するメソッド
+        /// </summary>
+        /// <param name="rank">合成するチップのランク</param>
+        /// <param name="a">合成するチップのコストa</param>
+        /// <param name="b">合成するチップのコストb</param>
+        /// <returns>合成後のチップのコスト</returns>
         private static int CalcCost(int rank, int a, int b)
         {
+            //---------------------------------------------------------------------------------------------
+            // ランクnのコストaとコストbのチップを合成すると、コスト(a+b+n+1)/2(切り捨て)のチップができる。
+            // ※ランク0はn=1
+            //---------------------------------------------------------------------------------------------
             if (rank != 0)
                 return (a + b + rank + 1) / 2;
             else
@@ -144,10 +161,11 @@ namespace NierCalculator
 
 
 
-
-        //-----------------------------------------------------
-        // ReadOnlyのセルを自動的にスキップするイベントハンドラ
-        //-----------------------------------------------------
+        /// <summary>
+        /// ReadOnlyのセルを自動的にスキップするイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void materialTable_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (init)
@@ -173,9 +191,11 @@ namespace NierCalculator
         }
 
 
-        //-----------------------------------------------------
-        // セルを選択しても選択解除するイベントハンドラ
-        //-----------------------------------------------------
+        /// <summary>
+        /// セルを選択しても選択解除するイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void materialTable2_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
@@ -183,9 +203,11 @@ namespace NierCalculator
         }
 
 
-        //-----------------------------------------------------
-        // 選択したセルをDelかBSで削除するイベントハンドラ
-        //-----------------------------------------------------
+        /// <summary>
+        /// 選択したセルをDelかBSで削除するイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void materialTable_KeyDown(object sender, KeyEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
@@ -200,9 +222,11 @@ namespace NierCalculator
         }
 
 
-        //-----------------------------------------------------
-        // リセットボタン押下時のイベントハンドラ
-        //-----------------------------------------------------
+        /// <summary>
+        /// リセットボタン押下時のイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bt_reset_Click(object sender, EventArgs e)
         {
             SwitchEnabled(false);
@@ -214,15 +238,19 @@ namespace NierCalculator
             cb_rank.SelectedIndex = 0;
             cb_count.SelectedIndex = 0;
 
+            lb_NoEnoughParts.Visible = false;
             lb_log.Text = "合成ログがここに表示される。\n推奨: 記載される手順に従った合成。";
 
             SwitchEnabled(true);
         }
 
 
-        //-----------------------------------------------------
-        // 計算ボタン押下時のイベントハンドラ
-        //-----------------------------------------------------
+
+        /// <summary>
+        /// 計算ボタン押下時のイベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bt_calc_Click(object sender, EventArgs e)
         {
             log.Clear();
@@ -252,11 +280,16 @@ namespace NierCalculator
                 }
             }
 
+
+            //-----------------------------------------------------
+            // パーツ合成
+            //-----------------------------------------------------
             int rank = cb_rank.SelectedIndex + 1;
             int cost = MINCOST[rank] + cb_cost.SelectedIndex;
             int count = cb_count.SelectedIndex + 1;
 
             bool result = Conv(rank, cost, count);
+
 
             //-----------------------------------------------------
             // materialTable2への出力
@@ -278,14 +311,15 @@ namespace NierCalculator
             StringBuilder stb = new StringBuilder();
             if (result)
             {
+                //合成できた場合は、パーツ不足の警告を非表示
                 lb_NoEnoughParts.Visible = false;
             }
             else
             {
+                //合成できなかった場合は、パーツ不足の警告を表示
                 lb_NoEnoughParts.Visible = true;
                 stb.Append("\n\n\n");
             }
-            //log.Sort();
             foreach (Log l in log)
             {
                 stb.Append(l.ToString() + "\n");
@@ -373,12 +407,15 @@ namespace NierCalculator
                             }
 
 
-                            //合成成功時、合成ログに記録する
-                            if (log.Count == 0) log.Add(new Log(rank - 1, a, b));
+                            //-----------------------------------
+                            // 合成成功時、合成ログに記録する
+                            //-----------------------------------
+                            if (log.Count == 0) log.Add(new Log(rank - 1, a, b));   //ログが存在しない場合は追加
                             else
                             {
                                 for (int i = 0; i < log.Count; i++)
                                 {
+                                    //既に同ランク、コストのチップが合成されていた場合は、その枚数を1増やすことで対応する
                                     if (log[i].rank == rank - 1 && log[i].cost_a == a && log[i].cost_b == b)
                                     {
                                         Log l = log[i];
@@ -386,11 +423,13 @@ namespace NierCalculator
                                         log[i] = l;
                                         break;
                                     }
+                                    //昇順で挿入されているため、現在のランク、コストより大きいエントリが存在した場合は、その時点のエントリの前に追加する
                                     else if (Log.Assesment(rank,a,b) < log[i].Assesment())
                                     {
                                         log.Insert(i, new Log(rank - 1, a, b));
                                         break;
                                     }
+                                    //リストの末尾に到達した場合は、末尾に追加する
                                     else if(i == log.Count - 1)
                                     {
                                         log.Add(new Log(rank - 1, a, b));
@@ -400,29 +439,30 @@ namespace NierCalculator
                             }
 
 
-
+                            //合成後、数が足りた場合はその時点で終了
                             if (partsCount[rank, cost] >= count) return true;
                         } while (true);
                     }
                     else if (c < cost) break;
                 }
             }
+            //合成できるパーツの候補が全てダメだった場合はfalseを返して終了
             return false;
         }
 
 
         /// <summary>
-        /// レベルコンボボックスの値変更時のイベントハンドラ
+        /// ランクコンボボックスの値変更時のイベントハンドラ
         /// </summary>
         /// <remarks>
-        /// レベルに応じてコストコンボボックスの内容を変更する
+        /// ランクに応じてコストコンボボックスの内容を変更する
         /// </remarks>
-        private void cb_level_SelectedIndexChanged(object sender, EventArgs e)
+        private void cb_rank_SelectedIndexChanged(object sender, EventArgs e)
         {
             //レベルは index + 1
-            int level = ((ComboBox)sender).SelectedIndex + 1;   //レベルを取得
+            int level = ((ComboBox)sender).SelectedIndex + 1;   //現在選択されているランクを取得
             cb_cost.Items.Clear();                              //コストコンボボックスのアイテムを全削除
-            for(int i = MINCOST[level]; i <= MAXCOST; i++)
+            for(int i = MINCOST[level]; i <= MAXCOST; i++)      //当該ランクの最小コストからMAXCOSTまでの値をコストコンボボックスに追加していく
             {
                 cb_cost.Items.Add(i.ToString());
             }

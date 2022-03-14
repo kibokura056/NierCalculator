@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.materialTable = new System.Windows.Forms.DataGridView();
             this.materialTable2 = new System.Windows.Forms.DataGridView();
@@ -44,8 +46,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lb_log = new System.Windows.Forms.Label();
             this.lb_NoEnoughParts = new System.Windows.Forms.Label();
+            this.lb_log = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -64,8 +66,24 @@
             this.materialTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.materialTable.ColumnHeadersHeight = 25;
             this.materialTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.materialTable.DefaultCellStyle = dataGridViewCellStyle1;
             this.materialTable.Location = new System.Drawing.Point(6, 18);
             this.materialTable.Name = "materialTable";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.materialTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.materialTable.RowHeadersVisible = false;
             this.materialTable.RowHeadersWidth = 35;
             this.materialTable.RowTemplate.Height = 21;
@@ -202,7 +220,7 @@
             this.cb_rank.Name = "cb_rank";
             this.cb_rank.Size = new System.Drawing.Size(50, 20);
             this.cb_rank.TabIndex = 9;
-            this.cb_rank.SelectedIndexChanged += new System.EventHandler(this.cb_level_SelectedIndexChanged);
+            this.cb_rank.SelectedIndexChanged += new System.EventHandler(this.cb_rank_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -269,15 +287,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "合成ログ";
             // 
-            // lb_log
-            // 
-            this.lb_log.AutoSize = true;
-            this.lb_log.Location = new System.Drawing.Point(6, 15);
-            this.lb_log.Name = "lb_log";
-            this.lb_log.Size = new System.Drawing.Size(181, 24);
-            this.lb_log.TabIndex = 7;
-            this.lb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。";
-            // 
             // lb_NoEnoughParts
             // 
             this.lb_NoEnoughParts.AutoSize = true;
@@ -289,6 +298,15 @@
             this.lb_NoEnoughParts.TabIndex = 14;
             this.lb_NoEnoughParts.Text = "警告: パーツ不足\r\n推奨: パーツ集め及び厳選";
             this.lb_NoEnoughParts.Visible = false;
+            // 
+            // lb_log
+            // 
+            this.lb_log.AutoSize = true;
+            this.lb_log.Location = new System.Drawing.Point(6, 15);
+            this.lb_log.Name = "lb_log";
+            this.lb_log.Size = new System.Drawing.Size(181, 24);
+            this.lb_log.TabIndex = 7;
+            this.lb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。";
             // 
             // Form1
             // 
