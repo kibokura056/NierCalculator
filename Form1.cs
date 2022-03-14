@@ -35,7 +35,7 @@ namespace NierCalculator
             }
             public override string ToString()
             {
-                return $"ランク+{rank - 1}のコスト{cost_a} とコスト{cost_b} を合成 → ランク+{rank}, コスト{CalcCost(rank - 1, cost_a, cost_b)} ×{count}";
+                return $"ランク+{rank}のコスト{cost_a} とコスト{cost_b} を合成 → ランク+{rank + 1}, コスト{CalcCost(rank, cost_a, cost_b)} ×{count}";
             }
 
             public int Assesment()
@@ -45,7 +45,6 @@ namespace NierCalculator
 
             public static int Assesment(int rank, int cost_a, int cost_b)
             {
-                rank--;
                 return int.Parse($"{rank}{cost_a:D2}{cost_b:D2}");
             }
         }
@@ -375,12 +374,12 @@ namespace NierCalculator
 
 
                             //合成成功時、合成ログに記録する
-                            if (log.Count == 0) log.Add(new Log(rank, a, b));
+                            if (log.Count == 0) log.Add(new Log(rank - 1, a, b));
                             else
                             {
                                 for (int i = 0; i < log.Count; i++)
                                 {
-                                    if (log[i].rank == rank && log[i].cost_a == a && log[i].cost_b == b)
+                                    if (log[i].rank == rank - 1 && log[i].cost_a == a && log[i].cost_b == b)
                                     {
                                         Log l = log[i];
                                         l.count++;
@@ -389,12 +388,12 @@ namespace NierCalculator
                                     }
                                     else if (Log.Assesment(rank,a,b) < log[i].Assesment())
                                     {
-                                        log.Insert(i, new Log(rank, a, b));
+                                        log.Insert(i, new Log(rank - 1, a, b));
                                         break;
                                     }
                                     else if(i == log.Count - 1)
                                     {
-                                        log.Add(new Log(rank, a, b));
+                                        log.Add(new Log(rank - 1, a, b));
                                         break;
                                     }
                                 }
