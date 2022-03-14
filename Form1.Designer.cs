@@ -45,8 +45,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lb_NoEnoughParts = new System.Windows.Forms.Label();
-            this.lb_busy = new System.Windows.Forms.Label();
             this.tb_log = new System.Windows.Forms.TextBox();
+            this.lb_busy = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.materialTable2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -282,19 +282,6 @@
             this.lb_NoEnoughParts.Text = "警告: パーツ不足\r\n推奨: パーツ集め及び厳選";
             this.lb_NoEnoughParts.Visible = false;
             // 
-            // lb_busy
-            // 
-            this.lb_busy.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.lb_busy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lb_busy.Font = new System.Drawing.Font("MS UI Gothic", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.lb_busy.Location = new System.Drawing.Point(252, 304);
-            this.lb_busy.Name = "lb_busy";
-            this.lb_busy.Size = new System.Drawing.Size(427, 133);
-            this.lb_busy.TabIndex = 1;
-            this.lb_busy.Text = "処理中…\r\n\r\n推奨: 待機";
-            this.lb_busy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lb_busy.Visible = false;
-            // 
             // tb_log
             // 
             this.tb_log.AcceptsReturn = true;
@@ -308,6 +295,19 @@
             this.tb_log.Size = new System.Drawing.Size(321, 699);
             this.tb_log.TabIndex = 15;
             this.tb_log.Text = "合成ログがここに表示される。\r\n推奨: 記載される手順に従った合成。\r\n";
+            // 
+            // lb_busy
+            // 
+            this.lb_busy.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.lb_busy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lb_busy.Font = new System.Drawing.Font("MS UI Gothic", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lb_busy.Location = new System.Drawing.Point(265, 304);
+            this.lb_busy.Name = "lb_busy";
+            this.lb_busy.Size = new System.Drawing.Size(427, 133);
+            this.lb_busy.TabIndex = 1;
+            this.lb_busy.Text = "処理中…\r\n\r\n推奨: 待機";
+            this.lb_busy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lb_busy.Visible = false;
             // 
             // Form1
             // 
